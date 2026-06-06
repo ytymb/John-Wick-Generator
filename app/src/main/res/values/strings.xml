@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Курсовая Android</string>
+    <string name="login_title">Добро пожаловать!</string>
+    <string name="hint_login">Логин</string>
+    <string name="hint_password">Пароль</string>
+    <string name="hint_group">Номер группы</string>
+    <string name="btn_login">Войти</string>
+    <string name="author_info">Работу выполнил Павлов Павел, РИБО-02-24</string>
+    <string name="btn_continue">Продолжить</string>
+</resources>
