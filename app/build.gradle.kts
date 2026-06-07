@@ -47,6 +47,7 @@ dependencies {
         exclude(module = "stax-api")
         exclude(module = "xpp3")
     }
+    implementation("com.squareup.picasso:picasso:2.8")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation(libs.activity.ktx)
     implementation(libs.appcompat)

@@ -2,6 +2,8 @@ package com.example.android;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,19 +12,80 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.android.databinding.ActivityMainBinding;
+import com.squareup.picasso.Picasso;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainContract.MainView{
 
     private ActivityMainBinding binding;
+    private MainContract.MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(StdApp.LOG_TAG, "MainActivity: onCreate");
 
+        EdgeToEdge.enable(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        presenter = new MainPresenter(this);
+
+        binding.btnGenerate.setOnClickListener(v -> {
+            presenter.onLoadClicked(
+                    binding.etWidth.getText().toString().trim(),
+                    binding.etHeight.getText().toString().trim(),
+                    binding.cbYoung.isChecked(),
+                    binding.cbGrayscale.isChecked()
+            );
+        });
+    }
+
+    @Override
+    public void showLoading() {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.btnGenerate.setEnabled(false);
+    }
+
+    @Override
+    public void hideLoading() {
+        binding.progressBar.setVisibility(View.GONE);
+        binding.btnGenerate.setEnabled(true);
+    }
+
+    @Override
+    public void showImage(String url) {
+        Log.d(StdApp.LOG_TAG, "MainActivity: Загружаем изображение: " + url);
+
+        Picasso.get()
+                .load(url)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(binding.ivPhoto, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(StdApp.LOG_TAG, "Picasso: Изображение успешно загружено!");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e(StdApp.LOG_TAG, "Picasso: Ошибка загрузки", e);
+                        Log.e(StdApp.LOG_TAG, "Picasso: Тип ошибки: " + e.getClass().getName());
+                        Log.e(StdApp.LOG_TAG, "Picasso: Сообщение: " + e.getMessage());
+
+                        showError("Не удалось загрузить изображение. URL: " + url);
+                    }
+                });
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
