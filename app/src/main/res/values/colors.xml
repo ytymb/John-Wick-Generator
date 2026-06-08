@@ -2,7 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="login_background"></color>
+    <color name="login_panel"></color>
     <color name="text_primary"></color>
     <color name="text_secondary"></color>
+
+    <color name="testing_color_1">#A8B6CB</color>
+    <color name="testing_color_2">#9BAECB</color>
+    <color name="testing_color_3">#697B99</color>
+    <color name="testing_color_4">#4B6286</color>\
+    <color name="testing_color_5_grey">#ededed</color>
 </resources>

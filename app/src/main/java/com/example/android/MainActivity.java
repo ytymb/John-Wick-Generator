@@ -1,5 +1,6 @@
 package com.example.android;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,12 +38,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
         presenter = new MainPresenter(this);
 
         binding.btnGenerate.setOnClickListener(v -> {
-            presenter.onLoadClicked(
+            presenter.onGenerateClicked(
                     binding.etWidth.getText().toString().trim(),
                     binding.etHeight.getText().toString().trim(),
                     binding.cbYoung.isChecked(),
                     binding.cbGrayscale.isChecked()
             );
+        });
+        binding.btnShare.setOnClickListener(v -> {
+            presenter.onShareClicked();
+        });
+
+        binding.btnSave.setOnClickListener(v -> {
+            presenter.onSaveClicked();
         });
     }
 
@@ -81,6 +89,29 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
                         showError("Не удалось загрузить изображение. URL: " + url);
                     }
                 });
+    }
+
+
+    @Override
+    public void showShareDialog(String imageUrl) {
+        // Загружаем bitmap для шаринга
+        new Thread(() -> {
+            Bitmap bitmap = PhotoUtils.downloadBitmap(imageUrl);
+            if (bitmap != null) {
+                runOnUiThread(() -> {
+                    PhotoUtils.shareImage(this, bitmap);
+                });
+            } else {
+                runOnUiThread(() -> {
+                    showError("Не удалось загрузить изображение для шаринга");
+                });
+            }
+        }).start();
+    }
+
+    @Override
+    public void showSaveSuccess() {
+        Toast.makeText(this, getString(R.string.success_saved), Toast.LENGTH_LONG).show();
     }
 
     @Override

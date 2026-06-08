@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">Курсовая Android</string>
-    <string name="login_title">Добро пожаловать!</string>
+    <string name="tv_welcome">Добро пожаловать!</string>
+    <string name="tv_login">Войдите в аккаунт</string>
     <string name="hint_login">Логин</string>
     <string name="hint_password">Пароль</string>
     <string name="hint_group">Номер группы</string>
     <string name="btn_login">Войти</string>
-    <string name="author_info">Работу выполнил Павлов Павел, РИБО-02-24</string>
+    <string name="kursovaya">Курсовая работа</string>
+    <string name="author_info">Выполнил Павлов Павел, РИБО-02-24</string>
     <string name="btn_continue">Продолжить</string>
     <string name="main_title">Добро пожаловать в генератор фотографий Киану Ривза! Введите желаемые параметры.</string>
     <string name="hint_width">Высота</string>
@@ -15,5 +17,8 @@
     <string name="btn_generate">Сгенерировать</string>
     <string name="btn_share">Поделиться</string>
     <string name="btn_save">Сохранить</string>
+    <string name="success_saved">Фото сохранено в галерею</string>
+    <string name="error_no_photo">Сначала загрузите фото</string>
+    <string name="share_text">Посмотри на это фото Киану Ривза!</string>
 
 </resources>
