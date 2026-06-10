@@ -1,6 +1,9 @@
-package com.example.android;
+package com.example.android.Main;
 
 import android.util.Log;
+
+import com.example.android.R;
+import com.example.android.Core.StdApp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +23,6 @@ public class MainPresenter implements MainContract.MainPresenter {
     public void onGenerateClicked(String widthStr, String heightStr, boolean isYoung, boolean isGrayscale) {
         Log.d(StdApp.LOG_TAG, "MainPresenter: onGenerateClicked");
 
-        // Проверяем только ширину (она обязательна)
         if (widthStr.isEmpty()) {
             view.showError(view.getContext().getString(R.string.error_fill_all_fields));
             return;
@@ -39,7 +41,6 @@ public class MainPresenter implements MainContract.MainPresenter {
             return;
         }
 
-        // Высота необязательна - если пустая, будет равна ширине
         int height = width;
         if (!heightStr.isEmpty()) {
             try {
@@ -54,14 +55,12 @@ public class MainPresenter implements MainContract.MainPresenter {
             }
         }
 
-        // Формируем URL
         StringBuilder url = new StringBuilder("https://placekeanu.com/").append(width);
 
         if (!heightStr.isEmpty()) {
             url.append("/").append(height);
         }
 
-        // Параметры через точку
         List<String> options = new ArrayList<>();
         if (isYoung) options.add("y");
         if (isGrayscale) options.add("g");

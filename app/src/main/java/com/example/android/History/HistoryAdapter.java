@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.History;
 
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.android.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,14 +60,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         }
 
         void bind(HistoryItem item) {
-            // Загружаем фото из файла
             File file = new File(item.getFilePath());
             if (file.exists()) {
                 android.graphics.Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 ivPhoto.setImageBitmap(bitmap);
             }
 
-            // Клик по фото
             itemView.setOnClickListener(v -> {
                 if (listener != null) {
                     listener.onItemClick(item);

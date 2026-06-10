@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="32dp">
+    android:padding="32dp"
+    android:background="?attr/android:windowBackground">
 
     <TextView
         android:id="@+id/tvVariant"
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="?attr/android:textColorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -22,6 +24,7 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_marginTop="16dp"
+        android:textColor="?attr/android:textColorPrimary"
         app:layout_constraintTop_toBottomOf="@+id/tvVariant"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -31,16 +34,23 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:layout_marginTop="24dp"
+        android:textColor="?attr/android:textColorSecondary"
         app:layout_constraintTop_toBottomOf="@+id/tvAppName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnContinue"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_continue"
+        android:layout_height="56dp"
         android:layout_marginTop="32dp"
+        android:text="@string/btn_continue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorOnPrimary"
+        app:cornerRadius="12dp"
+        app:backgroundTint="?attr/colorPrimary"
+        app:iconGravity="textStart"
         app:layout_constraintTop_toBottomOf="@+id/tvTaskDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

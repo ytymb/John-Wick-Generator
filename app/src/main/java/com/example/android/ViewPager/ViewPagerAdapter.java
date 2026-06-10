@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.ViewPager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

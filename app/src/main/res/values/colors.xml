@@ -2,13 +2,23 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="login_panel"></color>
-    <color name="text_primary"></color>
-    <color name="text_secondary"></color>
 
-    <color name="testing_color_1">#A8B6CB</color>
-    <color name="testing_color_2">#9BAECB</color>
-    <color name="testing_color_3">#697B99</color>
-    <color name="testing_color_4">#4B6286</color>\
-    <color name="testing_color_5_grey">#ededed</color>
+
+    <color name="almost_black">#0f0f0f</color>
+    <color name="light_grey">#ededed</color>
+    <color name="grey">#4d4d4d</color>
+
+    <color name="dark_surface">#1E1E2E</color>
+    <color name="dark_surface_light">#2A2A3E</color>
+    <color name="dark_background">#0D0D0D</color>
+
+    <color name="text_dark_primary">#E8E8E8</color>
+    <color name="text_dark_secondary">#888888</color>
+    <color name="border_dark">#444455</color>
+
+    <color name="lavender">#CDBDFA</color>
+    <color name="lavender_dark">#B8A5F0</color>
+    <color name="text_on_lavender">#1A1A2E</color>
+
+
 </resources>

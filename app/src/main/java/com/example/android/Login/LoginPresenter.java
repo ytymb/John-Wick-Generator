@@ -1,8 +1,10 @@
-package com.example.android;
+package com.example.android.Login;
 
 
 import android.util.Log;
 
+import com.example.android.R;
+import com.example.android.Core.StdApp;
 import com.example.android.server.LoginResponse;
 
 public class LoginPresenter implements LoginContract.LoginPresenter {

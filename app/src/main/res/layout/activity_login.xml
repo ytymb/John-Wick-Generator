@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="?attr/android:windowBackground">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -29,7 +29,7 @@
                 android:text="@string/tv_login"
                 android:textSize="32sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="?attr/android:textColorPrimary"
                 android:layout_marginTop="48dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
                 android:layout_marginTop="40dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/testing_color_5_grey"
+                app:cardBackgroundColor="?attr/colorSurface"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -61,14 +61,17 @@
                         app:boxCornerRadiusTopStart="12dp"
                         app:boxCornerRadiusTopEnd="12dp"
                         app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusBottomEnd="12dp">
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxStrokeColor="?attr/colorControlNormal"
+                        app:hintTextColor="?attr/android:textColorSecondary">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etLogin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textColor="?attr/android:textColorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -81,14 +84,17 @@
                         app:boxCornerRadiusTopStart="12dp"
                         app:boxCornerRadiusTopEnd="12dp"
                         app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusBottomEnd="12dp">
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxStrokeColor="?attr/colorControlNormal"
+                        app:hintTextColor="?attr/android:textColorSecondary">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etPassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textColor="?attr/android:textColorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -100,14 +106,17 @@
                         app:boxCornerRadiusTopStart="12dp"
                         app:boxCornerRadiusTopEnd="12dp"
                         app:boxCornerRadiusBottomStart="12dp"
-                        app:boxCornerRadiusBottomEnd="12dp">
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxStrokeColor="?attr/colorControlNormal"
+                        app:hintTextColor="?attr/android:textColorSecondary">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etGroup"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textColor="?attr/android:textColorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -121,8 +130,9 @@
                 android:text="@string/btn_login"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimary"
                 app:cornerRadius="12dp"
-                app:backgroundTint="@color/black"
+                app:backgroundTint="?attr/colorPrimary"
                 app:iconGravity="textStart"
                 app:layout_constraintTop_toBottomOf="@+id/cardLogin"
                 app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +145,7 @@
                 android:layout_margin="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/testing_color_5_grey"
+                app:cardBackgroundColor="?attr/colorSurface"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -153,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/kursovaya"
                         android:textSize="14sp"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/android:textColorPrimary"
                         android:gravity="center" />
 
                     <TextView
@@ -161,7 +171,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/author_info"
                         android:textSize="12sp"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/android:textColorSecondary"
                         android:layout_marginTop="4dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

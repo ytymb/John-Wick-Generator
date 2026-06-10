@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.Utils;
 
 
 import android.content.ContentValues;
@@ -11,6 +11,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.core.content.FileProvider;
+
+import com.example.android.Core.StdApp;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -82,7 +84,6 @@ public class PhotoUtils {
             shareIntent.setType("image/jpeg");
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this Keanu Reeves photo! 🎬");
 
             context.startActivity(Intent.createChooser(shareIntent, "Поделиться фото"));
 

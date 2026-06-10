@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.History;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.android.R;
 
 import java.io.File;
 import java.util.List;
@@ -43,29 +45,24 @@ public class HistoryFragment extends Fragment {
         btnClearHistory = view.findViewById(R.id.btnClearHistory);
         historyManager = HistoryManager.getInstance();
 
-        // Настраиваем RecyclerView (сетка 3 колонки)
         adapter = new HistoryAdapter();
         rvHistory.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvHistory.setAdapter(adapter);
 
-        // Клик по фото
         adapter.setOnItemClickListener(item -> {
             openFullImageDialog(item);
         });
 
-        // Кнопка очистки
         btnClearHistory.setOnClickListener(v -> {
             clearHistory();
         });
 
-        // Загружаем историю
         loadHistory();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // Обновляем историю при возврате на вкладку
         loadHistory();
     }
 
@@ -76,7 +73,6 @@ public class HistoryFragment extends Fragment {
     }
 
     private void clearHistory() {
-        // Удаляем все файлы
         for (HistoryItem item : historyManager.getHistoryList()) {
             File file = new File(item.getFilePath());
             if (file.exists()) {
@@ -84,7 +80,6 @@ public class HistoryFragment extends Fragment {
             }
         }
 
-        // Очищаем список
         historyManager.getHistoryList().clear();
         adapter.setItems(historyManager.getHistoryList());
         checkEmpty();
@@ -103,7 +98,6 @@ public class HistoryFragment extends Fragment {
     }
 
     private void openFullImageDialog(HistoryItem item) {
-        // Загружаем Bitmap из файла
         File file = new File(item.getFilePath());
         if (!file.exists()) {
             Toast.makeText(getContext(), "Файл не найден", Toast.LENGTH_SHORT).show();
@@ -116,12 +110,10 @@ public class HistoryFragment extends Fragment {
             return;
         }
 
-        // Создаем ImageView для отображения
         ImageView imageView = new ImageView(requireContext());
         imageView.setImageBitmap(bitmap);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
-        // Создаем диалог
         new androidx.appcompat.app.AlertDialog.Builder(requireContext())
                 .setView(imageView)
                 .setPositiveButton("Закрыть", (dialog, which) -> dialog.dismiss())

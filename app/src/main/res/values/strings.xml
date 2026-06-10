@@ -1,6 +1,12 @@
 <resources>
+    //main
     <string name="app_name">Курсовая Android</string>
     <string name="tv_welcome">Добро пожаловать!</string>
+
+    //status
+    <string name="success_saved">Фото сохранено в галерею</string>
+
+    //Login Activity
     <string name="tv_login">Войдите в аккаунт</string>
     <string name="hint_login">Логин</string>
     <string name="hint_password">Пароль</string>
@@ -8,8 +14,16 @@
     <string name="btn_login">Войти</string>
     <string name="kursovaya">Курсовая работа</string>
     <string name="author_info">Выполнил Павлов Павел, РИБО-02-24</string>
+
+    //Task Activity
     <string name="btn_continue">Продолжить</string>
-    <string name="main_title">Добро пожаловать в генератор фотографий Киану Ривза! Введите желаемые параметры.</string>
+
+    //ToolBar
+    <string name="toolbar_title">Генератор Джон Уика</string>
+
+    //Generator Fragment
+    <string name="main_title">Введите желаемые параметры и кликните сгенерировать!</string>
+    <string name="tv_parameters">Параметры генерации</string>
     <string name="hint_width">Высота</string>
     <string name="hint_height">Ширина</string>
     <string name="option_young">Молодой Киану</string>
@@ -17,8 +31,17 @@
     <string name="btn_generate">Сгенерировать</string>
     <string name="btn_share">Поделиться</string>
     <string name="btn_save">Сохранить</string>
-    <string name="success_saved">Фото сохранено в галерею</string>
+
+    //History Fragment
+    <string name="empty_history">История пуста</string>
+    <string name="clear_all_history">Очистить историю</string>
+
+    //Errors
+    <string name="error_fill_all_fields">Заполните все поля</string>
+    <string name="error_number_format">Неверный формат</string>
+    <string name="error_invalid_width">Введите ширину от 10 до 5000</string>
+    <string name="error_invalid_height">Введите высоту от 10 до 5000</string>
     <string name="error_no_photo">Сначала загрузите фото</string>
-    <string name="share_text">Посмотри на это фото Киану Ривза!</string>
+
 
 </resources>

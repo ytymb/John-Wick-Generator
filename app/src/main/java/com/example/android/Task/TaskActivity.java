@@ -1,15 +1,14 @@
-package com.example.android;
+package com.example.android.Task;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.android.Main.MainActivity;
+import com.example.android.Core.StdApp;
+import com.example.android.Utils.ThemeUtilit;
 import com.example.android.databinding.ActivityTaskBinding;
 
 public class TaskActivity extends AppCompatActivity {
@@ -34,7 +33,7 @@ public class TaskActivity extends AppCompatActivity {
         binding.tvTaskDescription.setText(taskDescription);
 
         binding.btnContinue.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity2.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         });

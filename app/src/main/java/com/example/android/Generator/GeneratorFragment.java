@@ -1,19 +1,14 @@
-package com.example.android;
+package com.example.android.Generator;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
-import android.graphics.Picture;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,12 +16,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.caverock.androidsvg.SVG;
+import com.example.android.Main.MainContract;
+import com.example.android.Main.MainPresenter;
+import com.example.android.R;
+import com.example.android.Core.StdApp;
+import com.example.android.Utils.PhotoUtils;
 import com.example.android.databinding.FragmentGeneratorBinding;
+import com.example.android.History.HistoryItem;
+import com.example.android.History.HistoryManager;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -120,7 +119,6 @@ public class GeneratorFragment extends Fragment implements MainContract.MainView
                 InputStream inputStream = connection.getInputStream();
                 SVG svg = SVG.getFromInputStream(inputStream);
 
-                // Получаем размеры SVG
                 float svgWidth = svg.getDocumentWidth();
                 float svgHeight = svg.getDocumentHeight();
 
@@ -132,20 +130,17 @@ public class GeneratorFragment extends Fragment implements MainContract.MainView
                 int width = (int) svgWidth;
                 int height = (int) svgHeight;
 
-                // ВСЕГДА рендерим SVG в Bitmap
                 android.graphics.Picture picture = svg.renderToPicture(width, height);
                 android.graphics.Bitmap bitmap = android.graphics.Bitmap.createBitmap(
                         width, height, android.graphics.Bitmap.Config.ARGB_8888);
                 android.graphics.Canvas canvas = new android.graphics.Canvas(bitmap);
                 canvas.drawPicture(picture);
 
-                // Применяем grayscale если нужно
                 if (url.contains("g")) {
                     bitmap = makeGrayscale(bitmap);
                     Log.d(StdApp.LOG_TAG, "Применён grayscale фильтр");
                 }
 
-                // СОХРАНЯЕМ Bitmap в поле класса
                 currentBitmap = bitmap;
 
                 final android.graphics.Bitmap finalBitmap = bitmap;
@@ -170,7 +165,6 @@ public class GeneratorFragment extends Fragment implements MainContract.MainView
         }).start();
     }
 
-    // Метод для перевода Bitmap в черно-белый
     private Bitmap makeGrayscale(Bitmap source) {
         Bitmap result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), source.getConfig());
         Canvas canvas = new Canvas(result);
@@ -185,92 +179,6 @@ public class GeneratorFragment extends Fragment implements MainContract.MainView
         return result;
     }
 
-//    @Override
-//    public void showImage(String url) {
-//        Log.d(StdApp.LOG_TAG, "GeneratorFragment: Загружаем SVG: " + url);
-//
-//        binding.tvPlaceholder.setVisibility(View.VISIBLE);
-//        binding.tvPlaceholder.setText("Загрузка...");
-//
-//        new Thread(() -> {
-//            try {
-//                URL imageUrl = new URL(url);
-//                HttpURLConnection connection = (HttpURLConnection) imageUrl.openConnection();
-//                InputStream inputStream = connection.getInputStream();
-//                SVG svg = SVG.getFromInputStream(inputStream);
-//
-//                // Проверяем, нужен ли grayscale
-//                final boolean needGrayscale = url.contains("g");
-//
-//                if (needGrayscale) {
-//                    // Получаем размеры SVG
-//                    float svgWidth = svg.getDocumentWidth();
-//                    float svgHeight = svg.getDocumentHeight();
-//
-//                    if (svgWidth <= 0 || svgHeight <= 0) {
-//                        svgWidth = 1000;
-//                        svgHeight = 1000;
-//                    }
-//
-//                    int width = (int) svgWidth;
-//                    int height = (int) svgHeight;
-//
-//                    // Рендерим SVG в Bitmap
-//                    Picture picture = svg.renderToPicture(width, height);
-//                    Bitmap bitmap = Bitmap.createBitmap(
-//                            width, height, Bitmap.Config.ARGB_8888);
-//                    Canvas canvas = new Canvas(bitmap);
-//                    canvas.drawPicture(picture);
-//
-//                    // Применяем grayscale фильтр
-//                    bitmap = makeGrayscale(bitmap);
-//
-//                    final Bitmap finalBitmap = bitmap;
-//                    requireActivity().runOnUiThread(() -> {
-//                        binding.ivPhoto.setImageBitmap(finalBitmap);
-//                        binding.tvPlaceholder.setVisibility(View.GONE);
-//                        Log.d(StdApp.LOG_TAG, "SVG отображён как Bitmap с grayscale!");
-//                    });
-//                } else {
-//                    // Показываем SVG напрямую
-//                    requireActivity().runOnUiThread(() -> {
-//                        binding.ivPhoto.setSVG(svg);
-//                        binding.tvPlaceholder.setVisibility(View.GONE);
-//                        Log.d(StdApp.LOG_TAG, "SVG отображён через SVGImageView!");
-//                    });
-//                }
-//
-//                connection.disconnect();
-//
-//            } catch (Exception e) {
-//                Log.e(StdApp.LOG_TAG, "Ошибка загрузки SVG", e);
-//                if (getActivity() != null) {
-//                    getActivity().runOnUiThread(() -> {
-//                        binding.tvPlaceholder.setText("Ошибка: " + e.getMessage());
-//                        binding.tvPlaceholder.setVisibility(View.VISIBLE);
-//                    });
-//                }
-//            }
-//        }).start();
-//    }
-//
-//    // Метод для перевода Bitmap в черно-белый
-//    private Bitmap makeGrayscale(Bitmap source) {
-//        Bitmap result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), source.getConfig());
-//        Canvas canvas = new Canvas(result);
-//        Paint paint = new Paint();
-//
-//        ColorMatrix matrix = new ColorMatrix();
-//        matrix.setSaturation(0); // 0 = полностью черно-белое
-//
-//        paint.setColorFilter(new ColorMatrixColorFilter(matrix));
-//        canvas.drawBitmap(source, 0, 0, paint);
-//
-//        return result;
-//    }
-
-
-
     @Override
     public void showShareDialog(String imageUrl) {
         new Thread(() -> {
@@ -281,7 +189,7 @@ public class GeneratorFragment extends Fragment implements MainContract.MainView
                 });
             } else {
                 requireActivity().runOnUiThread(() -> {
-                    showError("Не удалось загрузить изображение для шаринга");
+                    showError("Не удалось загрузить изображение чтобы поделиться");
                 });
             }
         }).start();
@@ -316,14 +224,11 @@ public class GeneratorFragment extends Fragment implements MainContract.MainView
         }
 
         new Thread(() -> {
-            // Сохраняем Bitmap в кэш
             String filePath = PhotoUtils.saveToCache(requireContext(), currentBitmap);
 
             if (filePath != null) {
-                // Создаём элемент истории
                 HistoryItem item = new HistoryItem(filePath);
 
-                // Добавляем в менеджер истории
                 historyManager.addItem(item);
 
                 Log.d(StdApp.LOG_TAG, "Фото добавлено в историю: " + filePath);

@@ -1,8 +1,9 @@
-package com.example.android;
+package com.example.android.Login;
 
 
 import android.util.Log;
 
+import com.example.android.Core.StdApp;
 import com.example.android.server.LoginResponse;
 
 import retrofit2.Call;

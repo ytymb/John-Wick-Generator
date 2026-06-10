@@ -1,125 +1,71 @@
-//package com.example.android;
-//
-//import android.content.Context;
-//import android.graphics.Bitmap;
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.view.View;
-//import android.widget.Toast;
-//
-//import androidx.activity.EdgeToEdge;
-//import androidx.appcompat.app.AppCompatActivity;
-//import androidx.core.graphics.Insets;
-//import androidx.core.view.ViewCompat;
-//import androidx.core.view.WindowInsetsCompat;
-//
-//import com.example.android.databinding.ActivityMainBinding;
-//import com.squareup.picasso.Picasso;
-//
-//
-//public class MainActivity extends AppCompatActivity implements MainContract.MainView{
-//
-//    private ActivityMainBinding binding;
-//    private MainContract.MainPresenter presenter;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        Log.d(StdApp.LOG_TAG, "MainActivity: onCreate");
-//        binding = ActivityMainBinding.inflate(getLayoutInflater());
-//        setContentView(binding.getRoot());
-//
-//        presenter = new MainPresenter(this);
-//
-//        binding.btnGenerate.setOnClickListener(v -> {
-//            presenter.onGenerateClicked(
-//                    binding.etWidth.getText().toString().trim(),
-//                    binding.etHeight.getText().toString().trim(),
-//                    binding.cbYoung.isChecked(),
-//                    binding.cbGrayscale.isChecked()
-//            );
-//        });
-//        binding.btnShare.setOnClickListener(v -> {
-//            presenter.onShareClicked();
-//        });
-//
-//        binding.btnSave.setOnClickListener(v -> {
-//            presenter.onSaveClicked();
-//        });
-//    }
-//
-//    @Override
-//    public void showLoading() {
-//        binding.progressBar.setVisibility(View.VISIBLE);
-//        binding.btnGenerate.setEnabled(false);
-//    }
-//
-//    @Override
-//    public void hideLoading() {
-//        binding.progressBar.setVisibility(View.GONE);
-//        binding.btnGenerate.setEnabled(true);
-//    }
-//
-//    @Override
-//    public void showImage(String url) {
-//        Log.d(StdApp.LOG_TAG, "MainActivity: Загружаем изображение: " + url);
-//
-//        Picasso.get()
-//                .load(url)
-//                .placeholder(R.drawable.ic_launcher_foreground)
-//                .error(R.drawable.ic_launcher_foreground)
-//                .into(binding.ivPhoto, new com.squareup.picasso.Callback() {
-//                    @Override
-//                    public void onSuccess() {
-//                        Log.d(StdApp.LOG_TAG, "Picasso: Изображение успешно загружено!");
-//                    }
-//
-//                    @Override
-//                    public void onError(Exception e) {
-//                        Log.e(StdApp.LOG_TAG, "Picasso: Ошибка загрузки", e);
-//                        Log.e(StdApp.LOG_TAG, "Picasso: Тип ошибки: " + e.getClass().getName());
-//                        Log.e(StdApp.LOG_TAG, "Picasso: Сообщение: " + e.getMessage());
-//
-//                        showError("Не удалось загрузить изображение. URL: " + url);
-//                    }
-//                });
-//    }
-//
-//
-//    @Override
-//    public void showShareDialog(String imageUrl) {
-//        new Thread(() -> {
-//            Bitmap bitmap = PhotoUtils.downloadBitmap(imageUrl);
-//            if (bitmap != null) {
-//                runOnUiThread(() -> {
-//                    PhotoUtils.shareImage(this, bitmap);
-//                });
-//            } else {
-//                runOnUiThread(() -> {
-//                    showError("Не удалось загрузить изображение для шаринга");
-//                });
-//            }
-//        }).start();
-//    }
-//
-//    @Override
-//    public void showSaveSuccess() {
-//        Toast.makeText(this, getString(R.string.success_saved), Toast.LENGTH_LONG).show();
-//    }
-//
-//    @Override
-//    public void showError(String message) {
-//        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        Log.d(StdApp.LOG_TAG, "MainActivity: onDestroy");
-//    }
-//
-//    @Override
-//    public Context getContext() {
-//        return this;
-//    }
-//}
+package com.example.android.Main;
+
+
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import com.example.android.Generator.GeneratorFragment;
+import com.example.android.R;
+import com.example.android.Utils.ThemeUtilit;
+import com.example.android.ViewPager.ViewPagerAdapter;
+import com.example.android.databinding.ActivityMainBinding;
+import com.example.android.History.HistoryFragment;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+
+public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtilit.applyTheme(this);
+
+        super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.toolbar);
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        adapter.addFragment(new GeneratorFragment(), "Генератор");
+        adapter.addFragment(new HistoryFragment(), "История");
+
+        binding.viewPager.setAdapter(adapter);
+
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) -> {
+            tab.setText(adapter.getPageTitle(position));
+        }).attach();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        updateThemeIcon(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_theme) {
+            ThemeUtilit.toggleTheme(this);
+            recreate();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateThemeIcon(Menu menu) {
+        MenuItem themeItem = menu.findItem(R.id.action_theme);
+        if (themeItem != null) {
+            int mode = AppCompatDelegate.getDefaultNightMode();
+            boolean isDark = mode == AppCompatDelegate.MODE_NIGHT_YES;
+            themeItem.setIcon(isDark ? R.drawable.ic_black_theme : R.drawable.ic_white_theme);
+        }
+    }
+}

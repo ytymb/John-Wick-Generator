@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.Login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,12 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.android.Core.StdApp;
+import com.example.android.Task.TaskActivity;
+import com.example.android.Utils.ThemeUtilit;
 import com.example.android.databinding.ActivityLoginBinding;
 import com.example.android.server.LoginResponse;
 

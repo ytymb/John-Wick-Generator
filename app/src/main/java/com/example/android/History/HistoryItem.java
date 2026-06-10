@@ -1,4 +1,4 @@
-package com.example.android;
+package com.example.android.History;
 
 public class HistoryItem {
     private String filePath;
