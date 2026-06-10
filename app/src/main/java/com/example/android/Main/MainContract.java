@@ -1,5 +1,7 @@
 package com.example.android;
 
+import android.content.Context;
+
 public class MainContract {
 
     public interface MainView {
@@ -9,6 +11,7 @@ public class MainContract {
         void showError(String message);
         void showShareDialog(String imageUrl);
         void showSaveSuccess();
+        Context getContext();
     }
 
     public interface MainPresenter {

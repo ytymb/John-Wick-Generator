@@ -1,5 +1,7 @@
 package com.example.android;
 
+import android.content.Context;
+
 import com.example.android.server.LoginResponse;
 
 public class LoginContract {
@@ -9,6 +11,7 @@ public class LoginContract {
         void hideLoading();
         void showError(String errorMessage);
         void showSuccess(LoginResponse response);
+        Context getContext();
     }
 
     public interface LoginPresenter {

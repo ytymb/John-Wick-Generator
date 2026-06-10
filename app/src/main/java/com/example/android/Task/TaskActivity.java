@@ -20,6 +20,7 @@ public class TaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(StdApp.LOG_TAG, "TaskActivity: onCreate");
+        ThemeUtilit.applyTheme(this);
 
         binding = ActivityTaskBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -33,11 +34,12 @@ public class TaskActivity extends AppCompatActivity {
         binding.tvTaskDescription.setText(taskDescription);
 
         binding.btnContinue.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, MainActivity2.class);
             startActivity(intent);
             finish();
         });
     }
+
 
     @Override
     protected void onDestroy() {

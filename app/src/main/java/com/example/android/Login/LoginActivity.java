@@ -1,5 +1,6 @@
 package com.example.android;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(StdApp.LOG_TAG, "LoginActivity: onCreate");
+        ThemeUtilit.applyTheme(this);
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -74,5 +76,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
     protected void onDestroy() {
         super.onDestroy();
         Log.d(StdApp.LOG_TAG, "LoginActivity: onDestroy");
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

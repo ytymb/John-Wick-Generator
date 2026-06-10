@@ -3,7 +3,7 @@ package com.example.android;
 
 import android.app.Application;
 
-import com.example.android.server.Api;
+import com.example.android.server.LoginApi;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -14,7 +14,7 @@ public class StdApp extends Application {
 
     public static final String LOG_TAG = "student_app_tag";
 
-    private static Api api;
+    private static LoginApi api;
     private static StdApp instance;
 
     @Override
@@ -35,10 +35,10 @@ public class StdApp extends Application {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        api = retrofit.create(Api.class);
+        api = retrofit.create(LoginApi.class);
     }
 
-    public static Api getApi() {
+    public static LoginApi getApi() {
         return api;
     }
 

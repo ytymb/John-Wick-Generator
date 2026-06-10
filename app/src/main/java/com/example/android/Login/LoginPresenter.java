@@ -20,7 +20,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
         Log.d(StdApp.LOG_TAG, "LoginPresenter: onLoginClicked");
 
         if (login.isEmpty() || password.isEmpty() || group.isEmpty()) {
-            view.showError("Заполните все поля");
+            view.showError(view.getContext().getString(R.string.error_fill_all_fields));
             return;
         }
 

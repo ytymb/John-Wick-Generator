@@ -2,6 +2,9 @@ package com.example.android;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainPresenter implements MainContract.MainPresenter {
 
     private MainContract.MainView view;
@@ -15,50 +18,64 @@ public class MainPresenter implements MainContract.MainPresenter {
 
     @Override
     public void onGenerateClicked(String widthStr, String heightStr, boolean isYoung, boolean isGrayscale) {
-        Log.d(StdApp.LOG_TAG, "MainPresenter: onLoadClicked");
+        Log.d(StdApp.LOG_TAG, "MainPresenter: onGenerateClicked");
 
+        // Проверяем только ширину (она обязательна)
         if (widthStr.isEmpty()) {
-            view.showError("Введите ширину");
+            view.showError(view.getContext().getString(R.string.error_fill_all_fields));
             return;
         }
 
         int width;
         try {
             width = Integer.parseInt(widthStr);
-            if (width <= 0) throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            view.showError("Некорректная ширина");
+            view.showError(view.getContext().getString(R.string.error_number_format));
             return;
         }
 
-        StringBuilder url = new StringBuilder("https://placekeanu.com/").append(width);
+        if (width < 10 || width > 5000) {
+            view.showError(view.getContext().getString(R.string.error_invalid_width));
+            return;
+        }
 
+        // Высота необязательна - если пустая, будет равна ширине
+        int height = width;
         if (!heightStr.isEmpty()) {
             try {
-                int height = Integer.parseInt(heightStr);
-                if (height > 0) {
-                    url.append("/").append(height);
-                }
+                height = Integer.parseInt(heightStr);
             } catch (NumberFormatException e) {
-                Log.d(StdApp.LOG_TAG, "MainPresenter: Некорректная высота, игнорируем");
+                view.showError(view.getContext().getString(R.string.error_number_format));
+                return;
+            }
+            if (height < 10 || height > 5000) {
+                view.showError(view.getContext().getString(R.string.error_invalid_height));
+                return;
             }
         }
 
-        String options = "";
-        if (isYoung) options += "y";
-        if (isGrayscale) options += "g";
+        // Формируем URL
+        StringBuilder url = new StringBuilder("https://placekeanu.com/").append(width);
 
-        if (!options.isEmpty()) {
-            url.append("/").append(options);
+        if (!heightStr.isEmpty()) {
+            url.append("/").append(height);
         }
 
-        String finalUrl = url.toString();
-        Log.d(StdApp.LOG_TAG, "MainPresenter: Сформирован URL: " + finalUrl);
+        // Параметры через точку
+        List<String> options = new ArrayList<>();
+        if (isYoung) options.add("y");
+        if (isGrayscale) options.add("g");
 
-        this.currentImageUrl = finalUrl;
+        if (!options.isEmpty()) {
+            url.append("/").append(String.join(".", options));
+        }
+
+        currentImageUrl = url.toString();
+        Log.d(StdApp.LOG_TAG, "MainPresenter: Сформирован URL: " + currentImageUrl);
+
         view.showLoading();
 
-        repository.loadImage(finalUrl, new MainContract.OnImageLoaded() {
+        repository.loadImage(currentImageUrl, new MainContract.OnImageLoaded() {
             @Override
             public void onSuccess(String imageUrl) {
                 view.hideLoading();
