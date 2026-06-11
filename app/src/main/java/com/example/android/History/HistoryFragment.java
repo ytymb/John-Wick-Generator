@@ -1,5 +1,6 @@
 package com.example.android.History;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -104,7 +106,7 @@ public class HistoryFragment extends Fragment {
             return;
         }
 
-        android.graphics.Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
         if (bitmap == null) {
             Toast.makeText(getContext(), "Не удалось загрузить фото", Toast.LENGTH_SHORT).show();
             return;
@@ -114,7 +116,7 @@ public class HistoryFragment extends Fragment {
         imageView.setImageBitmap(bitmap);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
-        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        new AlertDialog.Builder(requireContext())
                 .setView(imageView)
                 .setPositiveButton("Закрыть", (dialog, which) -> dialog.dismiss())
                 .show();

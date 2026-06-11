@@ -6,6 +6,9 @@ import android.util.Log;
 import com.example.android.Core.StdApp;
 import com.example.android.server.LoginResponse;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,7 +72,7 @@ public class LoginRepository implements LoginContract.LoginRepository {
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.e(StdApp.LOG_TAG, "LoginRepository onFailure: " + t.getMessage());
 
-                if (t instanceof java.net.UnknownHostException || t instanceof java.io.IOException) {
+                if (t instanceof UnknownHostException || t instanceof IOException) {
                     listener.onFailed("Проблема с интернет-соединением. Проверьте настройки сети.");
                 } else {
                     listener.onFailed("Ошибка сети: " + t.getMessage());

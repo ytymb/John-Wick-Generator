@@ -95,18 +95,15 @@ public class PhotoUtils {
 
     public static String saveToCache(Context context, Bitmap bitmap) {
         try {
-            // Создаем папку кэша, если её нет
             File cacheDir = context.getCacheDir();
-            // Имя файла с текущим временем
             File file = new File(cacheDir, "hist_" + System.currentTimeMillis() + ".jpg");
 
             FileOutputStream out = new FileOutputStream(file);
-            // Сжимаем в JPEG с качеством 80%
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
             out.flush();
             out.close();
 
-            return file.getAbsolutePath(); // Возвращаем путь
+            return file.getAbsolutePath();
         } catch (Exception e) {
             Log.e(StdApp.LOG_TAG, "Ошибка сохранения в кэш", e);
             return null;

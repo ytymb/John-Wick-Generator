@@ -2,6 +2,8 @@ package com.example.android.Main;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.example.android.Utils.PhotoUtils;
@@ -13,7 +15,7 @@ public class MainRepository implements MainContract.MainRepository {
     public void loadImage(String url, MainContract.OnImageLoaded listener) {
         Log.d(StdApp.LOG_TAG, "MainRepository: Загрузка изображения по URL: " + url);
 
-        new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+        new Handler(Looper.getMainLooper()).post(() -> {
             listener.onSuccess(url);
         });
     }
@@ -31,16 +33,16 @@ public class MainRepository implements MainContract.MainRepository {
 
                 if (savedUri != null) {
                     Log.d(StdApp.LOG_TAG, "MainRepository: Изображение сохранено: " + savedUri);
-                    new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                    new Handler(Looper.getMainLooper()).post(() -> {
                         listener.onSuccess();
                     });
                 } else {
-                    new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                    new Handler(Looper.getMainLooper()).post(() -> {
                         listener.onFailed("Не удалось сохранить изображение");
                     });
                 }
             } else {
-                new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+                new Handler(Looper.getMainLooper()).post(() -> {
                     listener.onFailed("Не удалось загрузить изображение для сохранения");
                 });
             }

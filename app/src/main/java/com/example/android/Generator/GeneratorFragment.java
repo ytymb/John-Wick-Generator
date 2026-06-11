@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Picture;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -130,10 +131,10 @@ public class GeneratorFragment extends Fragment implements MainContract.MainView
                 int width = (int) svgWidth;
                 int height = (int) svgHeight;
 
-                android.graphics.Picture picture = svg.renderToPicture(width, height);
-                android.graphics.Bitmap bitmap = android.graphics.Bitmap.createBitmap(
-                        width, height, android.graphics.Bitmap.Config.ARGB_8888);
-                android.graphics.Canvas canvas = new android.graphics.Canvas(bitmap);
+                Picture picture = svg.renderToPicture(width, height);
+                Bitmap bitmap = Bitmap.createBitmap(
+                        width, height, Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
                 canvas.drawPicture(picture);
 
                 if (url.contains("g")) {
@@ -143,7 +144,7 @@ public class GeneratorFragment extends Fragment implements MainContract.MainView
 
                 currentBitmap = bitmap;
 
-                final android.graphics.Bitmap finalBitmap = bitmap;
+                final Bitmap finalBitmap = bitmap;
                 requireActivity().runOnUiThread(() -> {
                     binding.ivPhoto.setImageBitmap(finalBitmap);
                     binding.tvPlaceholder.setVisibility(View.GONE);
